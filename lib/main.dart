@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:load_auditor/view_models/load_auditor_model.dart';
 import 'package:load_auditor/views/homescreen.dart';
 import 'package:provider/provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'localstorage.dart';
 
-void main() {
+
+
+void main() async{
+  await Hive.initFlutter();
+  Hive.registerAdapter(LocalstorageAdapter());
+  localstoragehive = await Hive.openBox<Localstorage>('localstorageBox');
+
   runApp(const LoadAuditor());
 }
 class LoadAuditor extends StatelessWidget {
@@ -16,6 +24,7 @@ class LoadAuditor extends StatelessWidget {
       return LoadAuditorModel();
     },
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
       home: HomeScreen(),
       // home: Homescreen(),
     ),);

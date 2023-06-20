@@ -17,9 +17,12 @@ class LoadAuditorModel extends ChangeNotifier {
   int? numberOfBatteries;
   int? batteryS;
   int? chargeControl;
+  int? SuggestedSystemVoltage;
   // int? power;
   // // int power = 8888;
   // int energy = 8999;
+
+  String? savedListName;
 
 
 
@@ -41,6 +44,13 @@ class LoadAuditorModel extends ChangeNotifier {
   int get applianceCount {
     return _applianceList.length;
   }
+/// hive
+  void getSavedListTitle(String value) {
+    final z = value;
+    savedListName = z;
+    notifyListeners();
+  }
+
 
   dynamic get apparentPower {
     alx =  realPower / 0.7;
@@ -184,21 +194,23 @@ class LoadAuditorModel extends ChangeNotifier {
 
   //   return zh;
   // }
-   dynamic get systemVoltage{
-     if(alx! <= 1000){
-       systemVolt = 12;
-     }
-     else if(alx! > 1000 && alx! <= 3000){
-       systemVolt = 24;
-     }
-     else if(alx! > 3000 && alx! <= 15000){
-       systemVolt = 48;
-     }
-     else if(alx! > 15000 && alx! <= 20000){
-       systemVolt = 96;
-     }
-     return systemVolt;
-   }
+
+
+   // dynamic get systemVoltage{
+   //   if(alx! <= 1000){
+   //     systemVolt = 12;
+   //   }
+   //   else if(alx! > 1000 && alx! <= 3000){
+   //     systemVolt = 24;
+   //   }
+   //   else if(alx! > 3000 && alx! <= 15000){
+   //     systemVolt = 48;
+   //   }
+   //   else if(alx! > 15000 && alx! <= 20000){
+   //     systemVolt = 96;
+   //   }
+   //   return systemVolt;
+   // }
 
   dynamic get inverterSizing {
     if(alx! < 500){
@@ -326,20 +338,25 @@ class LoadAuditorModel extends ChangeNotifier {
   }
 
   dynamic get batterySizing{
-    if(alx! <= 1000){
-      batt = totalEnergy / (12 * 0.7);
-    }
-    else if(alx! > 1000 && alx! <= 3000){
-      batt = totalEnergy/ (24 * 0.7);
-    }
-    else if(alx! > 3000 && alx! <= 15000){
-      batt = totalEnergy / (48 * 0.7);
-    }
-    else if(alx! > 15000 && alx! <= 20000){
-      batt = totalEnergy / (96 * 0.7);
-    }
+      batt = totalEnergy / (SuggestedSystemVoltage! * 0.7);
     return batt!.round();
   }
+
+  //  dynamic get batterySizing{
+  //     if(alx! <= 1000){
+  //       batt = totalEnergy / (SuggestedSystemVoltage! * 0.7);
+  //     }
+  //     else if(alx! > 1000 && alx! <= 3000){
+  //       batt = totalEnergy/ (SuggestedSystemVoltage! * 0.7);
+  //     }
+  //     else if(alx! > 3000 && alx! <= 15000){
+  //       batt = totalEnergy / (48 * 0.7);
+  //     }
+  //     else if(alx! > 15000 && alx! <= 20000){
+  //       batt = totalEnergy / (96 * 0.7);
+  //     }
+  //     return batt!.round();
+  //   }
 
   void addNewAppliance(){
     final appList = ApplianceCard(applianceName: '$applianceName', unit: '$unit', wattunit: '$wattunit', totalPower: '$power', runTime: '$runtime', energy: '$energy');
@@ -399,6 +416,12 @@ void getApplianceName(String value) {
     suggestedBattery = a;
     notifyListeners();
   }
+  void getSystemVoltage (String value){
+    final s = int.parse(value);
+    SuggestedSystemVoltage = s;
+    notifyListeners();
+  }
+
   void getNumberOfBatteries (String value){
     final a =int.parse(value);
     numberOfBatteries = a;
@@ -416,14 +439,30 @@ void getApplianceName(String value) {
     // return b.round();
     return b;
   }
+
+  ///for calculation screen display
+  dynamic get chargingBatteyCurrentt {
+    double a = realPower / 230;
+    double b = a / 1.414;
+    // return b.round();
+    return b.toStringAsFixed(3);
+  }
+
   dynamic get ssolarChargeControllerSizing {
     dynamic a = 0.1 * (batteryS! * numberOfBatteries!);
     return a.round();
   }
   dynamic get solarChargeControllerSizing {
     dynamic b = chargingBatteyCurrent + ssolarChargeControllerSizing;
-    return b.round();
+    return b;
   }
+  ///for calculation screen display
+  dynamic get solarChargeControllerSizingg {
+    dynamic b = chargingBatteyCurrent + ssolarChargeControllerSizing;
+    return b.toStringAsFixed(3);
+  }
+
+
   dynamic get solarCC {
     if(solarChargeControllerSizing < 10){
       chargeControl = 10;
@@ -462,8 +501,8 @@ void getApplianceName(String value) {
   //   }
 
   dynamic get pvSizing {
-    var a = systemVolt! * solarChargeControllerSizing;
-    return a;
+    var a = SuggestedSystemVoltage! * solarChargeControllerSizing;
+    return a.round();
   }
 
   //  void updateAddNewTask (String newlyAddedTask){
