@@ -18,6 +18,7 @@ class _CalcuScreenState extends State<CalcuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Battery Sizing'),
       ),

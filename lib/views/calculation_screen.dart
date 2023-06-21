@@ -17,6 +17,7 @@ class _CalculationScreenState extends State<CalculationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Full Load Audit'),
       ),
@@ -146,7 +147,7 @@ class _CalculationScreenState extends State<CalculationScreen> {
                               style: TextStyle(color: Colors.black, fontSize: 17.0,),
                             ),
                             Text(
-                              ' ${Provider.of<LoadAuditorModel>(context).ssolarChargeControllerSizing} VA',
+                              ' ${Provider.of<LoadAuditorModel>(context).ssolarChargeControllerSizing} A',
                               style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w500),
                             ),
                           ],
@@ -215,7 +216,7 @@ class _CalculationScreenState extends State<CalculationScreen> {
                                                   calculatedBatterySize:
                                                   '${Provider.of<LoadAuditorModel>(context, listen: false).batterySizing} Ah',
                                                   ILBC:
-                                                  '${Provider.of<LoadAuditorModel>(context, listen: false).ssolarChargeControllerSizing} VA',
+                                                  '${Provider.of<LoadAuditorModel>(context, listen: false).ssolarChargeControllerSizing} A',
                                                   ILDC:
                                                   '${Provider.of<LoadAuditorModel>(context, listen: false).chargingBatteyCurrentt} A',
                                                   inverterSize:

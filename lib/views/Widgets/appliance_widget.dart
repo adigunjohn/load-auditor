@@ -14,6 +14,10 @@ class ApplianceWidget extends StatelessWidget {
           final app = model.applianceList[index];
           // return appwidget(sn: '', applianceName: 'fan', unit: '15', wattunit: '15', totalPower: '306 Watt', runTime: '20 Hours', energy: '2007 WH');
           return AppWidget(
+            onpressed: (){
+              Provider.of<LoadAuditorModel>(context, listen: false).deleteFromList(index);
+              print('deleted');
+            },
             applianceName: app.applianceName,
             unit: app.unit,
             wattunit: app.wattunit,
@@ -55,33 +59,35 @@ class ApplianceWidget extends StatelessWidget {
 // ];
 
 class ApplianceCard {
-  const ApplianceCard({required this.applianceName, required this.unit, required this.wattunit, required this.totalPower, required this.runTime, required this.energy});
+  const ApplianceCard({required this.applianceName, required this.unit, required this.wattunit, required this.totalPower, required this.runTime, required this.energy, this.onpressed} );
   final String? applianceName;
   final String? wattunit;
   final String? totalPower;
   final String? runTime;
   final String? energy;
   final String? unit;
+  final void Function()? onpressed;
 }
 
 class AppWidget extends StatelessWidget {
-  const AppWidget({Key? key,required this.applianceName, required this.unit, required this.wattunit, required this.totalPower, required this.runTime, required this.energy}) : super(key: key);
+  const AppWidget({Key? key,required this.applianceName, required this.unit, required this.wattunit, required this.totalPower, required this.runTime, required this.energy, this.onpressed}) : super(key: key);
   final String? applianceName;
   final String? wattunit;
   final String? totalPower;
   final String? runTime;
   final String? energy;
   final String? unit;
+  final void Function()? onpressed;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0,bottom: 8.0),
       child: InkWell(
-        onDoubleTap: (){
-          Provider.of<LoadAuditorModel>(context, listen: false).deleteFromList();
-          print('yh');
-        },
+        onDoubleTap: onpressed
+          // Provider.of<LoadAuditorModel>(context, listen: false).deleteFromList(index);
+          // print('deleted');
+        ,
         child: Material(
             borderRadius: BorderRadius.circular(15.0),
           elevation: 10.0,
@@ -159,6 +165,10 @@ class AppWidget extends StatelessWidget {
                       ),),
                     ],
                   ),
+                  // Align(
+                  //   alignment: Alignment.bottomRight,
+                  //   child: IconButton(onPressed: (){}, icon: Icon(Icons.delete),),
+                  // ),
                 ],
               ),
             ),),

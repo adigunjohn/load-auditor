@@ -14,10 +14,11 @@ class CalcScreen extends StatefulWidget {
 class _CalcScreenState extends State<CalcScreen> {
   // const CalcScreen({Key? key}) : super(key: key);
   String? yeah;
-
+ TextEditingController myController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Inverter Sizing'),
       ),
@@ -108,6 +109,7 @@ class _CalcScreenState extends State<CalcScreen> {
                   height: 8.0,
                 ),
                 TextField(
+                  controller:  myController,
                   keyboardType: TextInputType.number,
                   // textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.black),

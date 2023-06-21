@@ -363,9 +363,9 @@ class LoadAuditorModel extends ChangeNotifier {
     _applianceList.add(appList);
     notifyListeners();
   }
-  void deleteFromList(){
-    final appList = ApplianceCard(applianceName: '$applianceName', unit: '$unit', wattunit: '$wattunit', totalPower: '$power', runTime: '$runtime', energy: '$energy');
-    _applianceList.remove(appList);
+  void deleteFromList(index){
+    // final appList = ApplianceCard(applianceName: '$applianceName', unit: '$unit', wattunit: '$wattunit', totalPower: '$power', runTime: '$runtime', energy: '$energy');
+    _applianceList.removeAt(index);
     notifyListeners();
   }
   void clearList(){

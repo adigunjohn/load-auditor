@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         content: Container(
-          height: MediaQuery.of(context).size.height / 4.5,
+          height: MediaQuery.of(context).size.height / 3.7,
           child: Column(
             children: [
               Row(
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Icon(Icons.circle, size: 10.0,),
                   ),
                   SizedBox(width: 3.0,),
-                  Container(width: MediaQuery.of(context).size.width / 1.7, child: Text('Click on the remove \'-\' button to clear the added appliances.',)),
+                  Container(width: MediaQuery.of(context).size.width / 1.7, child: Text('Click on the remove \'-\' button to clear all the added appliances.',)),
                 ],),
               SizedBox(height: 3.0,),
               Row(
@@ -79,6 +79,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(width: 3.0,),
                   Container(width: MediaQuery.of(context).size.width / 1.7, child: Text('Click on the double arrow \'>>\' button after you are done adding the appliances for the next step.',)),
+                ],),
+              SizedBox(height: 3.0,),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 3.0),
+                    child: Icon(Icons.circle, size: 10.0,),
+                  ),
+                  SizedBox(width: 3.0,),
+                  Container(width: MediaQuery.of(context).size.width / 1.7, child: Text(' You can double tap on the added appliance or saved (appliance) list to delete. ',)),
                 ],),
               SizedBox(height: 3.0,),
               Row(
@@ -104,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: Text('Load Auditor',),actions: [
         IconButton(onPressed: (){
          if(Provider.of<LoadAuditorModel>(context,listen: false).applianceCount != 0){
