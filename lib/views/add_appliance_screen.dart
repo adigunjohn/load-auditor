@@ -21,14 +21,19 @@ class _AddApplianceScreenState extends State<AddApplianceScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<LoadAuditorModel>(builder: (context, model, child) {
-      return Scaffold(
-        body: SingleChildScrollView(
-          physics: ClampingScrollPhysics(parent: NeverScrollableScrollPhysics()),
-          child: IntrinsicHeight(
-            child: Padding(
-            padding: const EdgeInsets.only(left: 13.0, right: 13.0),
+      return GestureDetector(
+        onTap: (){
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Scaffold(
+          body: SingleChildScrollView(
+            physics: ClampingScrollPhysics(parent: NeverScrollableScrollPhysics()),
             child: Container(
-              height: MediaQuery.of(context).size.height / 2,
+              child: Padding(
+              padding: const EdgeInsets.only(left: 13.0, right: 13.0),
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.center,
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -186,8 +191,8 @@ class _AddApplianceScreenState extends State<AddApplianceScreen> {
                   ),
                 ],
               ),
-            ),
     ),
+            ),
           ),
         ),
       );});
